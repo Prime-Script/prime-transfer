@@ -1,7 +1,6 @@
 fx_version 'cerulean'
 game 'gta5'
 
-author "NOCITY SCRIPTS | SocialPeely#4095"
 description 'Vehicle Transfer for QBCore'
 version '1.0.0'
 
