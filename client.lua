@@ -54,7 +54,13 @@ RegisterNetEvent('qb-transfer:transferCar', function(id)
     if player ~= -1 and distance < 2.5 then
         local playerId = GetPlayerServerId(player)
         if playerId == tonumber(id) then
-            TriggerServerEvent('qb-transfer:sellCar', GetPlayerServerId(PlayerId()), playerId, GetVehicleNumberPlateText(vehicle))
+            QBCore.Functions.TriggerCallback('qb-transfer:oweMoney',function(oweMoney)
+                if not oweMoney then
+                    TriggerServerEvent('qb-transfer:sellCar', GetPlayerServerId(PlayerId()), playerId, GetVehicleNumberPlateText(vehicle))
+                else
+                    QBCore.Functions.Notify(Config.Language[Config.UseLanguage].OwnMoney, 'error')
+                end
+            end, plate)
         else
             QBCore.Functions.Notify(Config.Language[Config.UseLanguage].transferCarWrongID, 'error')
         end

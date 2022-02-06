@@ -7,13 +7,15 @@ Config.UseLanguage = "en"
 Config.Language = {
     ["en"] = {
         -- Client QBCore Notify
-        giveCar = 'You can\'t store this vehicle in your garage!',
+        giveCar = 'You can\'t Store This Vehicle In Your Garage!',
 
-        transferCarInVehicle = 'You must be in a vehicle to transfer!',
+        transferCarInVehicle = 'You Must Be Inside A Vehicle To Transfer It!',
 
-        transferCarWrongID = 'This person is not around!',
+        OwnMoney = 'You Can\'t Sell A Vehicle On Finance!',
 
-        transferCarNoOneNear = 'No one is around!',
+        transferCarWrongID = 'This Person Isn\'t Around!',
+
+        transferCarNoOneNear = 'No One Is Around You!',
 
         -- Server QBCore Notify
 
