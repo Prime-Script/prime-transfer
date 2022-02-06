@@ -47,7 +47,7 @@ QBCore.Commands.Add("givecar", "Give Vehicle to Players (Admin Only)", {{name="i
     if plate == nil or plate == "" then plate = GeneratePlate() end
     if veh ~= nil and args[1] ~= nil then
         TriggerClientEvent('qb-transfer:giveCar', args[1], veh, plate)
-	TriggerClientEvent("QBCore:Notify", source, Config.Language[Config.UseLanguage].givecarAdmin, 'success', 8000)
+	TriggerClientEvent("QBCore:Notify", source, 'You Gave A Vehicle To '..tPlayer.PlayerData.charinfo.firstname..' '..tPlayer.PlayerData.charinfo.lastname..' Vehicle: '..veh..' With Plate : '..plate, 'success', 8000)
     else 
         TriggerClientEvent('QBCore:Notify', source, Config.Language[Config.UseLanguage].givecarFormat, 'error')
     end
@@ -105,8 +105,8 @@ AddEventHandler('qb-transfer:sellCar', function(player, target, plate)
                     ['@plate'] = result[1].plate,
                     ['@state'] = 0
                 })
-                TriggerClientEvent('QBCore:Notify', player, Config.Language[Config.UseLanguage].sellCarSelling, 'success', 8000)
-                TriggerClientEvent('QBCore:Notify', target, Config.Language[Config.UseLanguage].sellCarBuying, 'success', 8000) 
+                TriggerClientEvent('QBCore:Notify', player, 'You Gave The Registration Paper To '..tPlayer.PlayerData.charinfo.firstname.." "..tPlayer.PlayerData.charinfo.lastname, 'success', 8000)
+                TriggerClientEvent('QBCore:Notify', target, 'You Have Been Given The Registration Paper From '..xPlayer.PlayerData.charinfo.firstname..' '..xPlayer.PlayerData.charinfo.lastname, 'success', 8000) 
             else
                 TriggerClientEvent('QBCore:Notify', src, Config.Language[Config.UseLanguage].sellCarNotOwned, 'error', 5000)
             end

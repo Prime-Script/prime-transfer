@@ -17,8 +17,6 @@ Config.Language = {
 
         -- Server QBCore Notify
 
-        givecarAdmin = 'You Gave A Vehicle To '..tPlayer.PlayerData.charinfo.firstname..' '..tPlayer.PlayerData.charinfo.lastname..' Vehicle: '..veh..' With Plate : '..plate,
-
         givecarFormat = 'Incorrect Format!',
 
         transferCarNoID = 'Please Provide ID',
@@ -26,10 +24,6 @@ Config.Language = {
         saveCarNowBelong = 'This Vehicle Now Belongs To You...',
 
         saveCarAlreadyBelong = 'This Vehicle Already Belongs To You...',
-
-        sellCarSelling = 'You Gave The Registration Paper To '..tPlayer.PlayerData.charinfo.firstname.." "..tPlayer.PlayerData.charinfo.lastname,
-
-        sellCarBuying = 'You Have Been Given The Registration Paper From '..xPlayer.PlayerData.charinfo.firstname..' '..xPlayer.PlayerData.charinfo.lastname,
 
         sellCarNotOwned = 'You Don\'t Own This Vehicle...',
     },
