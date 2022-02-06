@@ -46,10 +46,10 @@ QBCore.Commands.Add("givecar", "Give Vehicle to Players (Admin Only)", {{name="i
     local tPlayer = QBCore.Functions.GetPlayer(tonumber(args[1]))
     if plate == nil or plate == "" then plate = GeneratePlate() end
     if veh ~= nil and args[1] ~= nil then
-        TriggerClientEvent('nc-veh:client:givecar', args[1], veh, plate)
-	TriggerClientEvent("QBCore:Notify", source, "You gave vehilce to "..tPlayer.PlayerData.charinfo.firstname.." "..tPlayer.PlayerData.charinfo.lastname.." Vehicle :"..veh.." With Plate : "..plate, "success", 8000)
+        TriggerClientEvent('qb-transfer:giveCar', args[1], veh, plate)
+	TriggerClientEvent("QBCore:Notify", source, Config.Language[Config.UseLanguage].givecarAdmin, 'success', 8000)
     else 
-        TriggerClientEvent('QBCore:Notify', source, "Incorrect Format", "error")
+        TriggerClientEvent('QBCore:Notify', source, Config.Language[Config.UseLanguage].givecarFormat, 'error')
     end
 end, "god")
 
@@ -57,16 +57,16 @@ QBCore.Commands.Add("transfercar", "Transfer Vehicle to Other Player (Must Be in
     local id = args[1]
     local plate = args[2]
     if id ~= nil then
-        TriggerClientEvent('nc-veh:client:transferrc', source, id)
+        TriggerClientEvent('qb-transfer:transferCar', source, id)
     else 
-        TriggerClientEvent('QBCore:Notify', source, "Please Provide ID", "error")
+        TriggerClientEvent('QBCore:Notify', source, Config.Language[Config.UseLanguage].transferCarNoID, 'error')
     end
 end)
 
 -- Register
 
-RegisterServerEvent('nc-veh:server:SaveCar')
-AddEventHandler('nc-veh:server:SaveCar', function(mods, vehicle, hash, plate)
+RegisterServerEvent('qb-transfer:saveCar')
+AddEventHandler('qb-transfer:saveCar', function(mods, vehicle, hash, plate)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local result = MySQL.Sync.fetchAll('SELECT plate FROM player_vehicles WHERE plate=@plate', {['@plate'] = plate})
@@ -80,14 +80,14 @@ AddEventHandler('nc-veh:server:SaveCar', function(mods, vehicle, hash, plate)
             ['@plate'] = plate,
             ['@state'] = 0
         })
-        TriggerClientEvent('QBCore:Notify', src, 'The vehicle is now yours!', 'success', 5000)
+        TriggerClientEvent('QBCore:Notify', src, Config.Language[Config.UseLanguage].saveCarNowBelong, 'success', 5000)
     else
-        TriggerClientEvent('QBCore:Notify', src, 'This vehicle is already yours..', 'error', 3000)
+        TriggerClientEvent('QBCore:Notify', src, Config.Language[Config.UseLanguage].saveCarAlreadyBelong, 'error', 5000)
     end
 end)
 
-RegisterServerEvent('nc-veh:GiveRC')
-AddEventHandler('nc-veh:GiveRC', function(player, target, plate)
+RegisterServerEvent('qb-transfer:sellCar')
+AddEventHandler('qb-transfer:sellCar', function(player, target, plate)
     local src = source
 	local xPlayer = QBCore.Functions.GetPlayer(player)
 	local tPlayer = QBCore.Functions.GetPlayer(target)
@@ -105,13 +105,13 @@ AddEventHandler('nc-veh:GiveRC', function(player, target, plate)
                     ['@plate'] = result[1].plate,
                     ['@state'] = 0
                 })
-                TriggerClientEvent("QBCore:Notify", player, "You gave registration paper to "..tPlayer.PlayerData.charinfo.firstname.." "..tPlayer.PlayerData.charinfo.lastname, "success", 8000)
-                TriggerClientEvent("QBCore:Notify", target, "You received registration paper from "..xPlayer.PlayerData.charinfo.firstname.." "..xPlayer.PlayerData.charinfo.lastname, "success", 8000)     
+                TriggerClientEvent('QBCore:Notify', player, Config.Language[Config.UseLanguage].sellCarSelling, 'success', 8000)
+                TriggerClientEvent('QBCore:Notify', target, Config.Language[Config.UseLanguage].sellCarBuying, 'success', 8000) 
             else
-                TriggerClientEvent("QBCore:Notify", src, "You dont't own this vehicle", "error", 5000)
+                TriggerClientEvent('QBCore:Notify', src, Config.Language[Config.UseLanguage].sellCarNotOwned, 'error', 5000)
             end
         else
-            TriggerClientEvent("QBCore:Notify", src, "You dont't own this vehicle", "error", 5000)
+            TriggerClientEvent('QBCore:Notify', src, Config.Language[Config.UseLanguage].sellCarNotOwned, 'error', 5000)
         end
     end)
 end)

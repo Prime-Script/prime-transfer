@@ -25,11 +25,10 @@ end
 
 -- Register
 
-RegisterNetEvent('nc-veh:client:givecar')
-AddEventHandler('nc-veh:client:givecar', function(model, plate)
+RegisterNetEvent('qb-transfer:giveCar', function(model, plate)
     QBCore.Functions.SpawnVehicle(model, function(veh)
         TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
-        exports['lj-fuel']:SetFuel(veh, 100)
+        exports[Config.FuelSystem]:SetFuel(veh, 100)
         SetVehicleNumberPlateText(veh, plate)
         SetEntityAsMissionEntity(veh, true, true)
         local props = QBCore.Functions.GetVehicleProperties(veh)
@@ -37,18 +36,17 @@ AddEventHandler('nc-veh:client:givecar', function(model, plate)
         local vehname = GetDisplayNameFromVehicleModel(hash):lower()
         TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
         if QBCore.Shared.Vehicles[vehname] ~= nil and next(QBCore.Shared.Vehicles[vehname]) ~= nil then
-            TriggerServerEvent('nc-veh:server:SaveCar', props, QBCore.Shared.Vehicles[vehname], veh, GetVehicleNumberPlateText(veh))
+            TriggerServerEvent('qb-transfer:saveCar', props, QBCore.Shared.Vehicles[vehname], veh, GetVehicleNumberPlateText(veh))
         else
-            QBCore.Functions.Notify('You cant store this vehicle in your garage..', 'error')
+            QBCore.Functions.Notify(Config.Language[Config.UseLanguage].giveCar, 'error')
         end     
     end)
 end)
 
-RegisterNetEvent('nc-veh:client:transferrc')
-AddEventHandler('nc-veh:client:transferrc', function(id)
+RegisterNetEvent('qb-transfer:transferCar', function(id)
     local me = PlayerPedId()
     if not IsPedSittingInAnyVehicle(me) then
-        QBCore.Functions.Notify("You must be in a Vehicle to Transfer", "error")
+        QBCore.Functions.Notify(Config.Language[Config.UseLanguage].transferCarInVehicle, 'error')
         return
     end
     local vehicle = GetVehiclePedIsIn(me, false)	
@@ -56,11 +54,11 @@ AddEventHandler('nc-veh:client:transferrc', function(id)
     if player ~= -1 and distance < 2.5 then
         local playerId = GetPlayerServerId(player)
         if playerId == tonumber(id) then
-            TriggerServerEvent("nc-veh:GiveRC", GetPlayerServerId(PlayerId()), playerId, GetVehicleNumberPlateText(vehicle))
+            TriggerServerEvent('qb-transfer:sellCar', GetPlayerServerId(PlayerId()), playerId, GetVehicleNumberPlateText(vehicle))
         else
-            QBCore.Functions.Notify("Person not Near!", "error")
+            QBCore.Functions.Notify(Config.Language[Config.UseLanguage].transferCarWrongID, 'error')
         end
     else
-        QBCore.Functions.Notify("No one around!", "error")
+        QBCore.Functions.Notify(Config.Language[Config.UseLanguage].transferCarNoOneNear, 'error')
     end
 end)
