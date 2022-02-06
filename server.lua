@@ -118,7 +118,7 @@ end)
 
 ------ / Ensures That The Car Is Not On Finance
 
-QBCore.Functions.CreateCallback('qb-vehiclesales:server:oweMoney', function(source, cb, plate)
+QBCore.Functions.CreateCallback('qb-transfer:oweMoney', function(source, cb, plate)
     local result = MySQL.Sync.fetchAll('SELECT * FROM player_vehicles WHERE plate = ?', {plate})
     for k,v in pairs(result) do
         if v.balance > 1 then
