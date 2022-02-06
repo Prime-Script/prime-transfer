@@ -6,7 +6,7 @@ for i = 48,  57 do table.insert(NumberCharset, string.char(i)) end
 for i = 65,  90 do table.insert(Charset, string.char(i)) end
 for i = 97, 122 do table.insert(Charset, string.char(i)) end
 
--- Functions
+------ / Functions
 
 function GeneratePlate()
 	local plate = tostring(GetRandomNumber(1)) .. GetRandomLetter(2) .. tostring(GetRandomNumber(3)) .. GetRandomLetter(2)
@@ -37,7 +37,7 @@ function GetRandomLetter(length)
 	end
 end
 
--- Commands
+------ / Commands
 
 QBCore.Commands.Add("givecar", "Give Vehicle to Players (Admin Only)", {{name="id", help="Player ID"}, {name="model", help="Vehicle Model, for example: t20"}, {name="plate", help="Custom Number Plate (Leave to assign random) , for example: ABC123"}}, false, function(source, args)
     local ply = QBCore.Functions.GetPlayer(source)
@@ -63,7 +63,7 @@ QBCore.Commands.Add("transfercar", "Transfer Vehicle to Other Player (Must Be in
     end
 end)
 
--- Register
+------ / Register
 
 RegisterServerEvent('qb-transfer:saveCar')
 AddEventHandler('qb-transfer:saveCar', function(mods, vehicle, hash, plate)
@@ -116,7 +116,7 @@ AddEventHandler('qb-transfer:sellCar', function(player, target, plate)
     end)
 end)
 
------- / Ensures That The Car Is Not On Finance
+------ / Call Backs
 
 QBCore.Functions.CreateCallback('qb-transfer:oweMoney', function(source, cb, plate)
     local result = MySQL.Sync.fetchAll('SELECT * FROM player_vehicles WHERE plate = ?', {plate})
@@ -128,6 +128,3 @@ QBCore.Functions.CreateCallback('qb-transfer:oweMoney', function(source, cb, pla
         end
     end
 end)
-
-
-
