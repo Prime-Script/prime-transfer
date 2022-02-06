@@ -14,7 +14,7 @@ Link
 
 - Add Receipt After Purchase For Proof Of Purchase (Will hopefully prevent players from scamming each other)
 
-- Add the buy amount, once payed in invoices the car is theres
+- Add the buy amount, Once payment is complete in invoices the car will belong to you
 
 # Credit HH-Framework (Original Script)
 
