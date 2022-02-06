@@ -32,8 +32,5 @@ Config.Language = {
         sellCarBuying = 'You Have Been Given The Registration Paper From '..xPlayer.PlayerData.charinfo.firstname..' '..xPlayer.PlayerData.charinfo.lastname,
 
         sellCarNotOwned = 'You Don\'t Own This Vehicle...',
-
-
-        Config.Language[Config.UseLanguage].givecarFormat
     },
 }
