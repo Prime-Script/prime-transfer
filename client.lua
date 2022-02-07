@@ -1,6 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject() 
 
--- Functions
+------ / Functions
 
 function GetClosestPlayer()
     local closestPlayers = QBCore.Functions.GetPlayersFromCoords()
@@ -23,7 +23,7 @@ function GetClosestPlayer()
 	return closestPlayer, closestDistance
 end
 
--- Register
+------ / Register
 
 RegisterNetEvent('qb-transfer:giveCar', function(model, plate)
     QBCore.Functions.SpawnVehicle(model, function(veh)
@@ -34,7 +34,7 @@ RegisterNetEvent('qb-transfer:giveCar', function(model, plate)
         local props = QBCore.Functions.GetVehicleProperties(veh)
         local hash = props.model
         local vehname = GetDisplayNameFromVehicleModel(hash):lower()
-        TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
+        TriggerEvent('vehiclekeys:client:SetOwner', QBCore.Functions.GetPlate(veh))
         if QBCore.Shared.Vehicles[vehname] ~= nil and next(QBCore.Shared.Vehicles[vehname]) ~= nil then
             TriggerServerEvent('qb-transfer:saveCar', props, QBCore.Shared.Vehicles[vehname], veh, GetVehicleNumberPlateText(veh))
         else
@@ -54,8 +54,8 @@ RegisterNetEvent('qb-transfer:transferCar', function(id)
     if player ~= -1 and distance < 2.5 then
         local playerId = GetPlayerServerId(player)
         if playerId == tonumber(id) then
-            QBCore.Functions.TriggerCallback('qb-transfer:oweMoney',function(oweMoney)
-                if not oweMoney then
+            QBCore.Functions.TriggerCallback('qb-transfer:Finance', function(Finance)
+                if not Finance then
                     TriggerServerEvent('qb-transfer:sellCar', GetPlayerServerId(PlayerId()), playerId, GetVehicleNumberPlateText(vehicle))
                 else
                     QBCore.Functions.Notify(Config.Language[Config.UseLanguage].OwnMoney, 'error')

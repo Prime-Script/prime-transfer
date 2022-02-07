@@ -47,7 +47,7 @@ QBCore.Commands.Add("givecar", "Give Vehicle to Players (Admin Only)", {{name="i
     if plate == nil or plate == "" then plate = GeneratePlate() end
     if veh ~= nil and args[1] ~= nil then
         TriggerClientEvent('qb-transfer:giveCar', args[1], veh, plate)
-	TriggerClientEvent("QBCore:Notify", source, 'You Gave A Vehicle To '..tPlayer.PlayerData.charinfo.firstname..' '..tPlayer.PlayerData.charinfo.lastname..' Vehicle: '..veh..' With Plate : '..plate, 'success', 8000)
+        TriggerClientEvent("QBCore:Notify", source, 'You Gave A Vehicle To '..tPlayer.PlayerData.charinfo.firstname..' '..tPlayer.PlayerData.charinfo.lastname..' Vehicle: '..veh..' With Plate : '..plate, 'success', 8000)
     else 
         TriggerClientEvent('QBCore:Notify', source, Config.Language[Config.UseLanguage].givecarFormat, 'error')
     end
@@ -118,7 +118,7 @@ end)
 
 ------ / Call Backs
 
-QBCore.Functions.CreateCallback('qb-transfer:oweMoney', function(source, cb, plate)
+QBCore.Functions.CreateCallback('qb-transfer:Finance', function(source, cb, plate)
     local result = MySQL.Sync.fetchAll('SELECT * FROM player_vehicles WHERE plate = ?', {plate})
     for k,v in pairs(result) do
         if v.balance > 1 then
